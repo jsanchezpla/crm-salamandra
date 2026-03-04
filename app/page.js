@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -26,6 +27,7 @@ export default function LoginPage() {
 
       if (res.ok) {
         localStorage.setItem("crm_token", data.token);
+        localStorage.setItem("crm_email", email);
         router.push("/dashboard");
       } else {
         setError(data.error || "Error al iniciar sesión");
@@ -114,9 +116,12 @@ export default function LoginPage() {
                 <label className="text-xs lg:text-sm font-bold text-[#40269A] tracking-wide">
                   Contraseña
                 </label>
-                <a href="#" className="text-xs lg:text-sm font-bold text-[#FF0188] hover:underline">
+                {/* <Link
+                  href="/olvide-password"
+                  className="text-xs lg:text-sm font-bold text-[#FF0188] hover:underline"
+                >
                   ¿Olvidaste la contraseña?
-                </a>
+                </Link> */}
               </div>
               <input
                 type="password"
