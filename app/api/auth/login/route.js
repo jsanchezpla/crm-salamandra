@@ -1,34 +1,30 @@
-import dbConnect from "@/lib/dbConnect";
-import User from "@/models/User";
+import { NextResponse } from "next/server";
+import { getMasterModels } from "@/lib/masterDb";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
-    await dbConnect();
-
-    // 1. Extraemos los datos que nos envía tu formulario
     const { email, password } = await request.json();
 
-    // 2. Buscamos si existe el email en MongoDB
+    const { User } = await getMasterModels();
     const user = await User.findOne({ email });
     if (!user) {
       return NextResponse.json({ error: "Credenciales incorrectas" }, { status: 401 });
     }
 
-    // 3. Comparamos la contraseña escrita con la encriptada
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.passwordHash);
     if (!isMatch) {
       return NextResponse.json({ error: "Credenciales incorrectas" }, { status: 401 });
     }
 
-    // 4. Si todo es correcto, creamos el Token (Carnet de identidad digital)
-    // Nota: process.env.JWT_SECRET debe estar en tu archivo .env.local
+    // Actualizar lastLogin
+    await User.updateOne({ _id: user._id }, { lastLogin: new Date() });
+
     const token = jwt.sign(
-      { userId: user._id, email: user.email },
+      { userId: user._id, email: user.email, tenantId: user.tenantId, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: "8h" } // La sesión caduca a las 8 horas
+      { expiresIn: "8h" }
     );
 
     return NextResponse.json({ success: true, token });

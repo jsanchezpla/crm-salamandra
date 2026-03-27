@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const LeadSchema = new mongoose.Schema(
+export const LeadSchema = new mongoose.Schema(
   {
     nombre: { type: String, required: true },
     apellidos: { type: String, required: true },

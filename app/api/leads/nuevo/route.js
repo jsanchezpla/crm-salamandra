@@ -1,27 +1,27 @@
-// Archivo: app/api/leads/nuevo/route.js
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/dbConnect";
-import Lead from "@/models/Leads";
+import { getTenantContext, getModel } from "@/lib/withTenant";
+import { LeadSchema } from "@/models/Leads";
 
-// 1. Damos permiso a WordPress para enviarnos datos (CORS)
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*", // Cambia el "*" por "https://tu-wordpress.com" en producción para más seguridad
+  "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type",
+  "Access-Control-Allow-Headers": "Content-Type, x-tenant",
 };
 
-// 2. Gestionamos la pre-petición de seguridad del navegador
 export async function OPTIONS() {
   return NextResponse.json({}, { headers: corsHeaders });
 }
 
-// 3. Recibimos el formulario
 export async function POST(request) {
   try {
-    await dbConnect();
+    const ctx = await getTenantContext(request);
+    if (ctx.error) {
+      return NextResponse.json({ error: ctx.error }, { status: ctx.status, headers: corsHeaders });
+    }
+
+    const { tenantDb } = ctx;
     const data = await request.json();
 
-    // Validamos lo básico
     if (!data.email || !data.nombre) {
       return NextResponse.json(
         { error: "Faltan datos obligatorios" },
@@ -29,14 +29,14 @@ export async function POST(request) {
       );
     }
 
-    // Creamos el Lead
+    const Lead = getModel(tenantDb, "Lead", LeadSchema);
     const nuevoLead = await Lead.create({
       nombre: data.nombre,
       apellidos: data.apellidos,
       email: data.email,
       telefono: data.telefono,
       cursos: data.cursos || [],
-      estado: "Nuevo", // Entra por defecto como Nuevo
+      estado: "Nuevo",
     });
 
     return NextResponse.json(
@@ -45,7 +45,6 @@ export async function POST(request) {
     );
   } catch (error) {
     console.error("Error al guardar Lead:", error);
-    // Controlamos si el email ya dejó sus datos antes
     if (error.code === 11000) {
       return NextResponse.json(
         { error: "Este email ya está registrado en nuestro sistema." },

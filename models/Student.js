@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const StudentSchema = new mongoose.Schema(
+export const StudentSchema = new mongoose.Schema(
   {
     // Datos de cuenta
     username: { type: String },

@@ -1,22 +1,34 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/dbConnect";
-import Lead from "@/models/Leads";
-import Student from "@/models/Student";
-import Purchase from "@/models/Purchase";
-import Material from "@/models/Material"; // <-- 1. NUEVO IMPORT
+import { getTenantContext, getModel } from "@/lib/withTenant";
+import { LeadSchema } from "@/models/Leads";
+import { StudentSchema } from "@/models/Student";
+import { PurchaseSchema } from "@/models/Purchase";
+import { MaterialSchema } from "@/models/Material";
 
-export async function GET() {
+export async function GET(request) {
   try {
-    await dbConnect();
+    const ctx = await getTenantContext(request);
+    if (ctx.error) {
+      return NextResponse.json({ error: ctx.error }, { status: ctx.status });
+    }
 
-    // 1. Limpieza total de las 4 colecciones
-    await Lead.deleteMany({});
-    await Student.deleteMany({});
-    await Purchase.deleteMany({});
-    await Material.deleteMany({}); // <-- 2. LIMPIAMOS MATERIALES TAMBIÉN
+    const { tenantDb } = ctx;
 
-    // 2. Preparamos Leads y Alumnos
-    const leadsMocks = [
+    const Lead     = getModel(tenantDb, "Lead",     LeadSchema);
+    const Student  = getModel(tenantDb, "Student",  StudentSchema);
+    const Purchase = getModel(tenantDb, "Purchase", PurchaseSchema);
+    const Material = getModel(tenantDb, "Material", MaterialSchema);
+
+    // Limpieza total
+    await Promise.all([
+      Lead.deleteMany({}),
+      Student.deleteMany({}),
+      Purchase.deleteMany({}),
+      Material.deleteMany({}),
+    ]);
+
+    // Leads
+    await Lead.insertMany([
       {
         nombre: "Laura",
         apellidos: "Gómez",
@@ -41,9 +53,10 @@ export async function GET() {
         cursos: ["Desarrollo Web", "React", "Next.js"],
         estado: "Nuevo",
       },
-    ];
+    ]);
 
-    const alumnosMocks = [
+    // Alumnos
+    const alumnosCreados = await Student.insertMany([
       {
         username: "marcos_dev",
         email: "marcos@tech.es",
@@ -72,106 +85,33 @@ export async function GET() {
         ciudad: "Sevilla",
         tipoPerfil: "Empresa",
       },
-    ];
+    ]);
 
-    // 3. Guardamos Leads y Alumnos en la Base de Datos
-    await Lead.insertMany(leadsMocks);
-    const alumnosCreados = await Student.insertMany(alumnosMocks);
-
-    // 4. Extraemos los IDs reales que MongoDB acaba de generar para Marcos y Sofía
     const idMarcos = alumnosCreados.find((a) => a.email === "marcos@tech.es")._id;
-    const idSofia = alumnosCreados.find((a) => a.email === "sofia@estudio.com")._id;
+    const idSofia  = alumnosCreados.find((a) => a.email === "sofia@estudio.com")._id;
 
-    // 5. Declaramos las ventas de cursos
-    const ventasMocks = [
-      {
-        fechaCompra: new Date("2026-03-02"),
-        alumno: idSofia,
-        nombreCurso: "Masterclass Figma",
-        precio: 150,
-      },
-      {
-        fechaCompra: new Date("2026-02-28"),
-        alumno: idMarcos,
-        nombreCurso: "Bootcamp Next.js",
-        precio: 450,
-      },
-      {
-        fechaCompra: new Date("2026-03-01"),
-        alumno: idSofia,
-        nombreCurso: "Diseño UX/UI Avanzado",
-        precio: 250,
-      },
-      {
-        fechaCompra: new Date("2026-03-03"),
-        alumno: idMarcos,
-        nombreCurso: "Desarrollo Web",
-        precio: 300,
-      },
-    ];
-    await Purchase.insertMany(ventasMocks);
+    // Ventas
+    await Purchase.insertMany([
+      { fechaCompra: new Date("2026-03-02"), alumno: idSofia,  nombreCurso: "Masterclass Figma",        precio: 150 },
+      { fechaCompra: new Date("2026-02-28"), alumno: idMarcos, nombreCurso: "Bootcamp Next.js",          precio: 450 },
+      { fechaCompra: new Date("2026-03-01"), alumno: idSofia,  nombreCurso: "Diseño UX/UI Avanzado",    precio: 250 },
+      { fechaCompra: new Date("2026-03-03"), alumno: idMarcos, nombreCurso: "Desarrollo Web",            precio: 300 },
+    ]);
 
-    // --- 6. NUEVO: MOCKS DE MATERIALES EXTRAÍDOS DE TU DISEÑO ---
-    // Usamos los IDs de Marcos y Sofía para simular que han comprado estas descargas
-    const materialesMocks = [
-      {
-        alumno: idMarcos,
-        nombreMaterial: "Marcapáginas del Día del Libro",
-        categoria: "Fechas señaladas",
-        precio: 5,
-        fechaCompra: new Date("2026-03-05"),
-      },
-      {
-        alumno: idSofia,
-        nombreMaterial: "Materiales de preescritura",
-        categoria: "Área de aprendizaje",
-        precio: 15,
-        fechaCompra: new Date("2026-03-06"),
-      },
-      {
-        alumno: idMarcos,
-        nombreMaterial: "Dificultades de aprendizaje",
-        categoria: "Área de aprendizaje",
-        precio: 20,
-        fechaCompra: new Date("2026-03-07"),
-      },
-      {
-        alumno: idSofia,
-        nombreMaterial: "Becas ACNEE y ayudas",
-        categoria: "Becas y ayudas",
-        precio: 0, // Puede ser gratuito/lead magnet
-        fechaCompra: new Date("2026-03-08"),
-      },
-      {
-        alumno: idMarcos,
-        nombreMaterial: "Registro de conducta",
-        categoria: "Conducta",
-        precio: 12,
-        fechaCompra: new Date("2026-03-09"),
-      },
-      {
-        alumno: idSofia,
-        nombreMaterial: "Apoyos visuales",
-        categoria: "Conducta",
-        precio: 10,
-        fechaCompra: new Date("2026-03-10"),
-      },
-      {
-        alumno: idMarcos,
-        nombreMaterial: "Material de Pascua",
-        categoria: "Fechas señaladas",
-        precio: 8,
-        fechaCompra: new Date("2026-03-11"),
-      },
-    ];
+    // Materiales
+    await Material.insertMany([
+      { alumno: idMarcos, nombreMaterial: "Marcapáginas del Día del Libro",  categoria: "Fechas señaladas",   precio: 5,  fechaCompra: new Date("2026-03-05") },
+      { alumno: idSofia,  nombreMaterial: "Materiales de preescritura",       categoria: "Área de aprendizaje", precio: 15, fechaCompra: new Date("2026-03-06") },
+      { alumno: idMarcos, nombreMaterial: "Dificultades de aprendizaje",      categoria: "Área de aprendizaje", precio: 20, fechaCompra: new Date("2026-03-07") },
+      { alumno: idSofia,  nombreMaterial: "Becas ACNEE y ayudas",             categoria: "Becas y ayudas",      precio: 0,  fechaCompra: new Date("2026-03-08") },
+      { alumno: idMarcos, nombreMaterial: "Registro de conducta",             categoria: "Conducta",            precio: 12, fechaCompra: new Date("2026-03-09") },
+      { alumno: idSofia,  nombreMaterial: "Apoyos visuales",                  categoria: "Conducta",            precio: 10, fechaCompra: new Date("2026-03-10") },
+      { alumno: idMarcos, nombreMaterial: "Material de Pascua",               categoria: "Fechas señaladas",    precio: 8,  fechaCompra: new Date("2026-03-11") },
+    ]);
 
-    // Insertamos los materiales en la base de datos
-    await Material.insertMany(materialesMocks);
-
-    return NextResponse.json(
-      { mensaje: "✅ Semilla plantada con éxito. Leads, Alumnos, Compras y Materiales creados." },
-      { status: 200 }
-    );
+    return NextResponse.json({
+      mensaje: "✅ Semilla plantada con éxito. Leads, Alumnos, Compras y Materiales creados.",
+    });
   } catch (error) {
     console.error("Error al poblar la BD:", error);
     return NextResponse.json(

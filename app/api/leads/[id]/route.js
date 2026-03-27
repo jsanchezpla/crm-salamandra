@@ -1,26 +1,26 @@
-// Archivo: app/api/leads/[id]/route.js
 import { NextResponse } from "next/server";
-import dbConnect from "@/lib/dbConnect";
-import Lead from "@/models/Leads";
+import { getTenantContext, getModel } from "@/lib/withTenant";
+import { LeadSchema } from "@/models/Leads";
 
 export async function PATCH(request, { params }) {
   try {
-    await dbConnect();
+    const ctx = await getTenantContext(request);
+    if (ctx.error) {
+      return NextResponse.json({ error: ctx.error }, { status: ctx.status });
+    }
 
-    // 1. LA SOLUCIÓN AL ERROR ROJO: Le ponemos 'await' a params
+    const { tenantDb } = ctx;
     const { id } = await params;
-
-    const body = await request.json();
-    const { estado } = body;
+    const { estado } = await request.json();
 
     if (!estado) {
       return NextResponse.json({ error: "Falta el estado a actualizar" }, { status: 400 });
     }
 
-    // 2. LA SOLUCIÓN AL AVISO NARANJA: Usamos returnDocument: 'after'
+    const Lead = getModel(tenantDb, "Lead", LeadSchema);
     const leadActualizado = await Lead.findByIdAndUpdate(
       id,
-      { estado: estado },
+      { estado },
       { returnDocument: "after" }
     );
 
@@ -28,10 +28,7 @@ export async function PATCH(request, { params }) {
       return NextResponse.json({ error: "Lead no encontrado" }, { status: 404 });
     }
 
-    return NextResponse.json(
-      { mensaje: "¡Estado actualizado en BD!", lead: leadActualizado },
-      { status: 200 }
-    );
+    return NextResponse.json({ mensaje: "¡Estado actualizado en BD!", lead: leadActualizado });
   } catch (error) {
     console.error("Error al actualizar estado:", error);
     return NextResponse.json({ error: "Error del servidor" }, { status: 500 });

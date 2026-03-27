@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const PurchaseSchema = new mongoose.Schema(
+export const PurchaseSchema = new mongoose.Schema(
   {
     // Conectamos esta compra con un Alumno de la base de datos
     alumno: {

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MaterialSchema = new mongoose.Schema(
+export const MaterialSchema = new mongoose.Schema(
   {
     // Conectamos este material con un Alumno de la base de datos
     alumno: {

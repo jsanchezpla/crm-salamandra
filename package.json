@@ -1,5 +1,5 @@
 {
-  "name": "crm-aumenta",
+  "name": "crm-salamdandra",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,11 +14,12 @@
     "file-saver": "^2.0.5",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.2.2",
-    "next": "16.1.6",
+    "next": "^16.2.1",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.15.9",
     "@tailwindcss/postcss": "^4.2.1",
     "autoprefixer": "^10.4.27",
     "eslint": "^9",
