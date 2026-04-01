@@ -22,7 +22,7 @@ export async function POST(request) {
     const { tenantDb } = ctx;
     const data = await request.json();
 
-    if (!data.email || !data.nombre) {
+    if (!data.email || !data.nombre || !data.motivo) {
       return NextResponse.json(
         { error: "Faltan datos obligatorios" },
         { status: 400, headers: corsHeaders }
@@ -35,7 +35,11 @@ export async function POST(request) {
       apellidos: data.apellidos,
       email: data.email,
       telefono: data.telefono,
-      cursos: data.cursos || [],
+      tipo_usuario: data.tipo_usuario || "ciudadano",
+      motivo: data.motivo,
+      servicio: data.servicio || undefined,
+      curso: data.curso || undefined,
+      mensaje: data.mensaje || undefined,
       estado: "Nuevo",
     });
 

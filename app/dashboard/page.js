@@ -28,7 +28,7 @@ export default function Dashboard() {
   const [ordenColumna, setOrdenColumna] = useState(null);
   const [ordenAscendente, setOrdenAscendente] = useState(true);
   const [filtroCursoVentas, setFiltroCursoVentas] = useState("");
-  const [filtroCursoLeads, setFiltroCursoLeads] = useState("");
+  const [filtroMotivoLeads, setFiltroMotivoLeads] = useState("");
   const [filtroEmpresa, setFiltroEmpresa] = useState("");
   const [filtroCategoria, setFiltroCategoria] = useState("");
   const [mostrarModalImportar, setMostrarModalImportar] = useState(false);
@@ -149,13 +149,14 @@ export default function Dashboard() {
     const coincideTexto =
       (l.nombre || "").toLowerCase().includes(term) ||
       (l.apellidos || "").toLowerCase().includes(term) ||
-      (l.email || "").toLowerCase().includes(term);
+      (l.email || "").toLowerCase().includes(term) ||
+      (l.servicio || "").toLowerCase().includes(term) ||
+      (l.curso || "").toLowerCase().includes(term) ||
+      (l.mensaje || "").toLowerCase().includes(term);
 
-    const coincideCursoLead = filtroCursoLeads === "" || l.cursos.includes(filtroCursoLeads);
-    return coincideTexto && coincideCursoLead;
+    const coincideMotivo = filtroMotivoLeads === "" || l.motivo === filtroMotivoLeads;
+    return coincideTexto && coincideMotivo;
   });
-
-  const cursosUnicosLeads = [...new Set(leads.flatMap((l) => l.cursos).filter(Boolean))];
 
   if (ordenColumna && vistaActiva === "leads") {
     leadsProcesados.sort((a, b) => {
@@ -165,9 +166,9 @@ export default function Dashboard() {
           vA = a.nombre.toLowerCase();
           vB = b.nombre.toLowerCase();
           break;
-        case "curso":
-          vA = a.cursos.join(", ").toLowerCase();
-          vB = b.cursos.join(", ").toLowerCase();
+        case "motivo":
+          vA = (a.motivo || "").toLowerCase();
+          vB = (b.motivo || "").toLowerCase();
           break;
         case "estado":
           vA = a.estado.toLowerCase();
@@ -377,9 +378,8 @@ export default function Dashboard() {
                 FlechaOrden={FlechaOrden}
                 setLeadSeleccionado={setLeadSeleccionado}
                 getBadgeColor={getBadgeColor}
-                filtroCurso={filtroCursoLeads}
-                setFiltroCurso={setFiltroCursoLeads}
-                cursosUnicos={cursosUnicosLeads}
+                filtroMotivo={filtroMotivoLeads}
+                setFiltroMotivo={setFiltroMotivoLeads}
                 onExportar={() => exportarAExcel(leadsProcesados, "Leads_Aumenta", "leads")}
               />
             )}
