@@ -28,12 +28,17 @@ export default function StatsView({ leads, alumnos, ventas }) {
   const particulares = totalAlumnos - empresas;
   const porcentajeEmpresas = totalAlumnos > 0 ? Math.round((empresas / totalAlumnos) * 100) : 0;
 
-  // 3. Demanda de Cursos (Extrayendo qué cursos piden más los Leads)
+  // 3. Demanda por motivo/servicio/curso (nuevo modelo de leads)
+  const MOTIVO_LABEL = { diagnostico: "Diagnóstico", servicios: "Servicios", cursos: "Cursos" };
   const contadorCursos = {};
   leads.forEach((lead) => {
-    lead.cursos.forEach((curso) => {
-      contadorCursos[curso] = (contadorCursos[curso] || 0) + 1;
-    });
+    const clave =
+      lead.motivo === "cursos" && lead.curso
+        ? lead.curso
+        : lead.motivo === "servicios" && lead.servicio
+        ? lead.servicio
+        : MOTIVO_LABEL[lead.motivo] || lead.motivo || "Sin motivo";
+    contadorCursos[clave] = (contadorCursos[clave] || 0) + 1;
   });
 
   const totalLeads = leads.length;
