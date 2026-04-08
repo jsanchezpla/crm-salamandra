@@ -49,7 +49,7 @@ export default function LeadsView({
           <select
             value={filtroMotivo}
             onChange={(e) => setFiltroMotivo(e.target.value)}
-            className="w-full lg:w-56 px-4 py-3 rounded-xl border-2 border-[#DEC7FF] bg-white text-[#40269A] font-bold focus:border-[#40269A] focus:ring-4 focus:ring-[#DEC7FF]/50 outline-none transition-all cursor-pointer appearance-none shadow-sm shrink-0"
+            className="w-full lg:w-56 px-4 py-3 rounded-xl border-2 border-brand-border bg-white text-brand font-bold focus:border-brand focus:ring-4 focus:ring-brand-border/50 outline-none transition-all cursor-pointer appearance-none shadow-sm shrink-0"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2340269A'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
               backgroundRepeat: "no-repeat",
@@ -70,7 +70,7 @@ export default function LeadsView({
             placeholder="Buscar lead, email..."
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
-            className="w-full flex-1 lg:min-w-72 px-4 py-3 border-2 border-gray-100 rounded-xl bg-[#fcfaff] text-[#40269A] font-bold focus:outline-none focus:border-[#FF0188] focus:ring-4 focus:ring-[#FFDAED] transition-all"
+            className="w-full flex-1 lg:min-w-72 px-4 py-3 border-2 border-gray-100 rounded-xl bg-surface text-brand font-bold focus:outline-none focus:border-brand focus:ring-4 focus:ring-brand-subtle transition-all"
           />
         </div>
       </div>
@@ -79,16 +79,16 @@ export default function LeadsView({
       <div className="rounded-xl lg:border lg:border-gray-200">
         <table className="w-full text-left border-collapse block lg:table">
           <thead className="hidden lg:table-header-group">
-            <tr className="bg-[#fcfaff] text-[#40269A] border-b border-gray-200 select-none">
+            <tr className="bg-surface text-brand border-b border-gray-200 select-none">
               <th
                 onClick={() => manejarOrden("nombre")}
-                className="p-4 font-black text-sm uppercase w-[30%] cursor-pointer hover:bg-[#DEC7FF]/20 group transition-colors"
+                className="p-4 font-black text-sm uppercase w-[30%] cursor-pointer hover:bg-brand-border/20 group transition-colors"
               >
                 Nombre y Email <FlechaOrden columna="nombre" />
               </th>
               <th
                 onClick={() => manejarOrden("motivo")}
-                className="p-4 font-black text-sm uppercase w-[15%] cursor-pointer hover:bg-[#DEC7FF]/20 group transition-colors"
+                className="p-4 font-black text-sm uppercase w-[15%] cursor-pointer hover:bg-brand-border/20 group transition-colors"
               >
                 Motivo <FlechaOrden columna="motivo" />
               </th>
@@ -97,7 +97,7 @@ export default function LeadsView({
               </th>
               <th
                 onClick={() => manejarOrden("estado")}
-                className="p-4 font-black text-sm uppercase w-[15%] cursor-pointer hover:bg-[#DEC7FF]/20 group transition-colors"
+                className="p-4 font-black text-sm uppercase w-[15%] cursor-pointer hover:bg-brand-border/20 group transition-colors"
               >
                 Estado <FlechaOrden columna="estado" />
               </th>
@@ -110,14 +110,14 @@ export default function LeadsView({
               leadsProcesados.map((lead) => (
                 <tr
                   key={lead.id}
-                  className="block lg:table-row bg-white mb-4 lg:mb-0 border border-gray-200 lg:border-b lg:border-gray-100 rounded-xl lg:rounded-none shadow-sm lg:shadow-none hover:bg-[#fcfaff] transition-colors p-4 lg:p-0"
+                  className="block lg:table-row bg-white mb-4 lg:mb-0 border border-gray-200 lg:border-b lg:border-gray-100 rounded-xl lg:rounded-none shadow-sm lg:shadow-none hover:bg-surface transition-colors p-4 lg:p-0"
                 >
                   {/* NOMBRE Y EMAIL */}
                   <td className="block lg:table-cell p-2 lg:p-4 border-b border-gray-50 lg:border-none relative">
                     <span className="lg:hidden font-bold text-gray-400 uppercase text-xs block mb-1">
                       Nombre y Email
                     </span>
-                    <div className="font-bold text-[#40269A] break-words lg:truncate">
+                    <div className="font-bold text-brand break-words lg:truncate">
                       {lead.nombre} {lead.apellidos}
                     </div>
                     <div className="text-xs text-gray-400 break-words lg:truncate">
@@ -165,7 +165,7 @@ export default function LeadsView({
                   <td className="block lg:table-cell p-2 lg:p-4 lg:text-right relative mt-2 lg:mt-0">
                     <button
                       onClick={() => setLeadSeleccionado(lead)}
-                      className="text-[#FF0188] bg-[#FFDAED]/50 hover:bg-[#FF0188] hover:text-white px-4 py-3 lg:py-2 rounded-xl font-bold text-sm lg:text-xs transition-all w-full lg:w-auto text-center"
+                      className="text-brand bg-brand-subtle/50 hover:bg-brand hover:text-white px-4 py-3 lg:py-2 rounded-xl font-bold text-sm lg:text-xs transition-all w-full lg:w-auto text-center"
                     >
                       Atender Lead
                     </button>

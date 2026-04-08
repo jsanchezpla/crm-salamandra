@@ -8,25 +8,25 @@ export default function MaterialModal({ material, onClose }) {
     : material.alumnoNombre || "Alumno Desconocido";
 
   return (
-    <div className="fixed inset-0 bg-[#40269A]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 lg:p-10">
+    <div className="fixed inset-0 bg-brand/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 lg:p-10">
       {/* Ajustamos el borde superior para móvil (border-t-4) */}
-      <div className="bg-white rounded-[2rem] w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl relative animate-fadeIn border-t-4 md:border-t-8 border-[#FF0188]">
+      <div className="bg-white rounded-[2rem] w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl relative animate-fadeIn border-t-4 md:border-t-8 border-brand">
         {/* BOTÓN CERRAR: reposicionado para móvil */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 bg-gray-100 hover:bg-[#FFDAED] hover:text-[#FF0188] text-gray-500 rounded-full flex items-center justify-center font-black transition-colors z-10"
+          className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 bg-gray-100 hover:bg-brand-subtle hover:text-brand text-gray-500 rounded-full flex items-center justify-center font-black transition-colors z-10"
         >
           ✕
         </button>
 
         {/* CABECERA DEL MODAL: padding reducido en móvil y texto centrado */}
-        <div className="bg-[#fcfaff] p-6 pt-12 md:p-10 border-b border-gray-100">
+        <div className="bg-surface p-6 pt-12 md:p-10 border-b border-gray-100">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6">
             <div className="w-full text-center md:text-left">
-              <span className="text-xs font-bold tracking-widest text-[#FF0188] uppercase bg-[#FFDAED]/50 px-3 py-1.5 rounded-md mb-3 inline-block">
+              <span className="text-xs font-bold tracking-widest text-brand uppercase bg-brand-subtle/50 px-3 py-1.5 rounded-md mb-3 inline-block">
                 {material.categoria}
               </span>
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-[#40269A] mt-1 leading-tight">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-brand mt-1 leading-tight">
                 {material.nombreMaterial}
               </h2>
             </div>
@@ -37,14 +37,14 @@ export default function MaterialModal({ material, onClose }) {
         <div className="p-6 md:p-8 lg:p-10 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
           {/* Columna Izquierda: Datos de la Compra */}
           <div className="space-y-6">
-            <h3 className="text-base md:text-lg font-black text-[#FF0188] uppercase tracking-widest border-b-2 border-gray-50 pb-2">
+            <h3 className="text-base md:text-lg font-black text-brand uppercase tracking-widest border-b-2 border-gray-50 pb-2">
               Detalles de Venta
             </h3>
             <div>
               <label className="text-xs font-bold text-gray-400 uppercase tracking-wide">
                 Fecha de Compra
               </label>
-              <p className="text-[#40269A] font-bold text-base md:text-lg mt-1">
+              <p className="text-brand font-bold text-base md:text-lg mt-1">
                 {material.fechaCompraStr || material.fechaCompra}
               </p>
             </div>
@@ -52,7 +52,7 @@ export default function MaterialModal({ material, onClose }) {
               <label className="text-xs font-bold text-gray-400 uppercase tracking-wide">
                 Importe Cobrado
               </label>
-              <p className="text-[#40269A] font-black text-2xl md:text-3xl mt-1">
+              <p className="text-brand font-black text-2xl md:text-3xl mt-1">
                 {material.precio}€
               </p>
             </div>
@@ -60,14 +60,14 @@ export default function MaterialModal({ material, onClose }) {
 
           {/* Columna Derecha: Datos del Alumno */}
           <div className="space-y-6">
-            <h3 className="text-base md:text-lg font-black text-[#FF0188] uppercase tracking-widest border-b-2 border-gray-50 pb-2">
+            <h3 className="text-base md:text-lg font-black text-brand uppercase tracking-widest border-b-2 border-gray-50 pb-2">
               Comprador
             </h3>
             <div className="bg-gray-50 p-5 rounded-xl border border-gray-100">
               <label className="text-xs font-bold text-gray-400 uppercase tracking-wide block text-center md:text-left">
                 Alumno Vinculado
               </label>
-              <p className="text-[#40269A] font-bold text-base md:text-lg mt-1 truncate text-center md:text-left">
+              <p className="text-brand font-bold text-base md:text-lg mt-1 truncate text-center md:text-left">
                 {nombreAlumno}
               </p>
 

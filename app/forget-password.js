@@ -40,14 +40,14 @@ export default function OlvidePassword() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-[#fcfaff] p-6 font-glacial relative overflow-hidden">
+    <div className="min-h-screen w-full flex items-center justify-center bg-surface p-6 font-glacial relative overflow-hidden">
       {/* Decoración de fondo */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-[#C49DFF]/20 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
-      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#FFDAED]/40 rounded-full translate-x-1/3 translate-y-1/3 blur-3xl"></div>
+      <div className="absolute top-0 left-0 w-96 h-96 bg-brand-muted/20 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-brand-subtle/40 rounded-full translate-x-1/3 translate-y-1/3 blur-3xl"></div>
 
-      <div className="w-full max-w-md bg-white p-10 rounded-[2rem] shadow-2xl border-t-8 border-[#FF0188] relative z-10">
+      <div className="w-full max-w-md bg-white p-10 rounded-[2rem] shadow-2xl border-t-8 border-brand relative z-10">
         <div className="text-center mb-8">
-          <h1 className="font-playpen text-3xl font-black text-[#40269A] mb-2">Recuperar Acceso</h1>
+          <h1 className="font-playpen text-3xl font-black text-brand mb-2">Recuperar Acceso</h1>
           <p className="text-gray-500 font-medium text-sm">
             Introduce tu correo electrónico y te enviaremos instrucciones para crear una nueva
             contraseña.
@@ -56,7 +56,7 @@ export default function OlvidePassword() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {error && (
-            <div className="p-4 bg-red-50 text-red-700 text-sm font-bold rounded-xl border-l-4 border-[#FF0188]">
+            <div className="p-4 bg-red-50 text-red-700 text-sm font-bold rounded-xl border-l-4 border-brand">
               ⚠️ {error}
             </div>
           )}
@@ -68,14 +68,14 @@ export default function OlvidePassword() {
           )}
 
           <div className="space-y-2">
-            <label className="text-sm font-bold text-[#40269A] tracking-wide ml-1">
+            <label className="text-sm font-bold text-brand tracking-wide ml-1">
               Email Profesional
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-5 py-4 rounded-xl bg-[#fcfaff] border-2 border-gray-100 text-[#40269A] font-bold text-lg outline-none focus:border-[#FF0188] focus:ring-4 focus:ring-[#FFDAED] transition-all duration-300 placeholder:text-gray-300"
+              className="w-full px-5 py-4 rounded-xl bg-surface border-2 border-gray-100 text-brand font-bold text-lg outline-none focus:border-brand focus:ring-4 focus:ring-brand-subtle transition-all duration-300 placeholder:text-gray-300"
               placeholder="admin@aumenta.com"
               required
             />
@@ -84,7 +84,7 @@ export default function OlvidePassword() {
           <button
             type="submit"
             disabled={cargando}
-            className="w-full py-4 px-6 rounded-xl bg-[#FF0188] hover:bg-[#40269A] text-white font-bold text-lg transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-[#C49DFF]/50 disabled:opacity-50 disabled:hover:translate-y-0"
+            className="w-full py-4 px-6 rounded-xl bg-brand hover:bg-brand text-white font-bold text-lg transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-brand-muted/50 disabled:opacity-50 disabled:hover:translate-y-0"
           >
             {cargando ? "Enviando enlace..." : "Enviar enlace de recuperación"}
           </button>
@@ -93,7 +93,7 @@ export default function OlvidePassword() {
         <div className="mt-8 text-center">
           <Link
             href="/"
-            className="text-sm font-bold text-[#C49DFF] hover:text-[#40269A] transition-colors"
+            className="text-sm font-bold text-brand-muted hover:text-brand transition-colors"
           >
             ← Volver a iniciar sesión
           </Link>

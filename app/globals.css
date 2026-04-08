@@ -2,6 +2,23 @@
 @import url("https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@700;800&display=swap");
 @import "tailwindcss";
 
+/* ─── Paleta de la marca ────────────────────────────────────────────────────
+   Edita aquí para cambiar todos los colores de la aplicación de una sola vez.
+   Los tokens se convierten automáticamente en clases Tailwind:
+     bg-brand, text-brand, border-brand
+     bg-brand-light, text-brand-light …
+     etc.
+   ─────────────────────────────────────────────────────────────────────────── */
+@theme {
+  --color-brand:        #1F3B34;   /* Verde principal — el más usado */
+  --color-brand-light:  #3E5C57;   /* Verde medio — hover, iconos activos */
+  --color-brand-muted:  #8FADA8;   /* Verde apagado — textos secundarios */
+  --color-brand-border: #C2D4D1;   /* Bordes y separadores */
+  --color-brand-subtle: #E8EFEE;   /* Fondos de sección muy suaves */
+  --color-surface:      #F6F6F3;   /* Fondo general de página */
+}
+
 body {
   font-family: "Glacial Indifference", sans-serif;
+  background-color: theme(--color-surface);
 }

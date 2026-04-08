@@ -267,9 +267,9 @@ export default function Dashboard() {
         </span>
       );
     return ordenAscendente ? (
-      <span className="text-[#FF0188] ml-1">↑</span>
+      <span className="text-brand ml-1">↑</span>
     ) : (
-      <span className="text-[#FF0188] ml-1">↓</span>
+      <span className="text-brand ml-1">↓</span>
     );
   };
 
@@ -319,7 +319,7 @@ export default function Dashboard() {
 
   if (cargando)
     return (
-      <div className="min-h-screen bg-[#fcfaff] flex items-center justify-center text-[#40269A] font-bold text-xl animate-pulse">
+      <div className="min-h-screen bg-surface flex items-center justify-center text-brand font-bold text-xl animate-pulse">
         Cargando tu espacio Aumenta...
       </div>
     );
@@ -327,9 +327,9 @@ export default function Dashboard() {
   const getBadgeColor = (estado) => {
     switch (estado) {
       case "Nuevo":
-        return "bg-[#FFDAED] text-[#FF0188] border border-[#FF0188]/20";
+        return "bg-brand-subtle text-brand border border-brand/20";
       case "Contactado":
-        return "bg-[#DEC7FF] text-[#40269A] border border-[#40269A]/20";
+        return "bg-brand-border text-brand border border-brand/20";
       case "Empresa":
         return "bg-blue-100 text-blue-700";
       case "Privado":
@@ -340,7 +340,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fcfaff] flex font-glacial relative">
+    <div className="min-h-screen bg-surface flex font-glacial relative">
       <Sidebar
         vistaActiva={vistaActiva}
         setVistaActiva={setVistaActiva}
@@ -350,21 +350,21 @@ export default function Dashboard() {
       <main className="flex-1 flex flex-col h-screen overflow-hidden">
         {/* MAGIA RESPONSIVA EN LA CABECERA */}
         <header className="bg-white py-5 px-4 pl-16 md:p-8 md:pl-8 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-3 md:gap-0 z-0 shrink-0 border-b border-gray-100">
-          <h1 className="text-xl md:text-3xl font-black text-[#40269A] tracking-tight">
+          <h1 className="text-xl md:text-3xl font-black text-brand tracking-tight">
             {vistaActiva === "estadisticas" && "Análisis y Rendimiento"}
             {vistaActiva === "leads" && "Gestión de Prospectos"}
             {vistaActiva === "alumnos" && "Directorio de Alumnos"}
             {vistaActiva === "ventas" && "Historial de Ventas"}
             {vistaActiva === "materiales" && "Ventas de Materiales"}
           </h1>
-          <div className="text-xs md:text-sm font-bold text-[#40269A] bg-[#DEC7FF]/30 px-4 py-2 md:px-6 md:py-3 rounded-full border border-[#C49DFF]/50 max-w-full truncate">
+          <div className="text-xs md:text-sm font-bold text-brand bg-brand-border/30 px-4 py-2 md:px-6 md:py-3 rounded-full border border-brand-muted/50 max-w-full truncate">
             {usuarioEmail || "Cargando..."}
           </div>
         </header>
 
         {/* MAGIA RESPONSIVA EN EL CONTENEDOR PRINCIPAL */}
-        <div className="p-4 md:p-8 flex-1 overflow-y-auto bg-gradient-to-br from-[#fcfaff] to-[#DEC7FF]/10">
-          <div className="bg-white p-5 md:p-8 lg:p-12 rounded-[2rem] shadow-xl border-t-[8px] border-[#FFDAED] min-h-full relative overflow-x-hidden">
+        <div className="p-4 md:p-8 flex-1 overflow-y-auto bg-gradient-to-br from-surface to-brand-border/10">
+          <div className="bg-white p-5 md:p-8 lg:p-12 rounded-[2rem] shadow-xl border-t-[8px] border-brand-subtle min-h-full relative overflow-x-hidden">
             {vistaActiva === "estadisticas" && (
               <StatsView leads={leads} alumnos={alumnos} ventas={ventas} />
             )}

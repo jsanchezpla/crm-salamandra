@@ -8,7 +8,7 @@ export const metadata = {
 
 // 2. Metadatos de visualización (Lo que antes daba el aviso)
 export const viewport = {
-  themeColor: "#40269A", // Color de la barra del navegador en móvil
+  themeColor: "#3E5C57", // Color de la barra del navegador en móvil
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
       </head>
       <body
         suppressHydrationWarning
-        className="font-glacial antialiased bg-slate-50 text-[#40269A] min-h-screen"
+        className="font-glacial antialiased bg-slate-50 text-brand min-h-screen"
       >
         {children}
       </body>

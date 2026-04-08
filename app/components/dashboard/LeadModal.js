@@ -19,24 +19,24 @@ export default function LeadModal({ lead, onClose, getBadgeColor, onUpdateEstado
   if (!lead) return null;
 
   return (
-    <div className="fixed inset-0 bg-[#40269A]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 lg:p-10">
-      <div className="bg-white rounded-[2rem] w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl relative animate-fadeIn border-t-4 md:border-t-8 border-[#FF0188]">
+    <div className="fixed inset-0 bg-brand/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 lg:p-10">
+      <div className="bg-white rounded-[2rem] w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl relative animate-fadeIn border-t-4 md:border-t-8 border-brand">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 bg-gray-100 hover:bg-[#FFDAED] hover:text-[#FF0188] text-gray-500 rounded-full flex items-center justify-center font-black transition-colors z-10"
+          className="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 bg-gray-100 hover:bg-brand-subtle hover:text-brand text-gray-500 rounded-full flex items-center justify-center font-black transition-colors z-10"
         >
           ✕
         </button>
 
-        <div className="bg-[#fcfaff] p-6 pt-12 md:p-10 border-b border-gray-100">
+        <div className="bg-surface p-6 pt-12 md:p-10 border-b border-gray-100">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 text-center md:text-left">
-            <div className="w-20 h-20 md:w-24 md:h-24 shrink-0 rounded-full bg-[#FFDAED] text-[#FF0188] flex items-center justify-center text-3xl md:text-4xl font-black shadow-inner">
+            <div className="w-20 h-20 md:w-24 md:h-24 shrink-0 rounded-full bg-brand-subtle text-brand flex items-center justify-center text-3xl md:text-4xl font-black shadow-inner">
               {(lead.nombre || "L").charAt(0).toUpperCase()}
               {(lead.apellidos || "").charAt(0).toUpperCase()}
             </div>
 
             <div className="flex flex-col items-center md:items-start w-full">
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-[#40269A] leading-tight">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-brand leading-tight">
                 {lead.nombre} {lead.apellidos}
               </h2>
 
@@ -78,7 +78,7 @@ export default function LeadModal({ lead, onClose, getBadgeColor, onUpdateEstado
         <div className="p-6 md:p-8 lg:p-10 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
           {/* INFORMACIÓN DE CONTACTO */}
           <div className="space-y-6">
-            <h3 className="text-base md:text-lg font-black text-[#FF0188] uppercase tracking-widest border-b-2 border-gray-50 pb-2">
+            <h3 className="text-base md:text-lg font-black text-brand uppercase tracking-widest border-b-2 border-gray-50 pb-2">
               Información de Contacto
             </h3>
             <div>
@@ -88,7 +88,7 @@ export default function LeadModal({ lead, onClose, getBadgeColor, onUpdateEstado
               <div className="flex items-center justify-center md:justify-start gap-2 mt-1">
                 <a
                   href={`mailto:${lead.email}`}
-                  className="text-base md:text-lg font-bold text-[#40269A] hover:text-[#FF0188] hover:underline decoration-2 underline-offset-4 transition-all break-all"
+                  className="text-base md:text-lg font-bold text-brand hover:text-brand hover:underline decoration-2 underline-offset-4 transition-all break-all"
                 >
                   {lead.email}
                 </a>
@@ -98,7 +98,7 @@ export default function LeadModal({ lead, onClose, getBadgeColor, onUpdateEstado
                     e.preventDefault();
                     navigator.clipboard.writeText(lead.email);
                   }}
-                  className="p-1.5 text-gray-400 hover:text-[#FF0188] hover:bg-[#FFDAED] rounded-md transition-all group shrink-0"
+                  className="p-1.5 text-gray-400 hover:text-brand hover:bg-brand-subtle rounded-md transition-all group shrink-0"
                   title="Copiar email"
                 >
                   <svg
@@ -122,7 +122,7 @@ export default function LeadModal({ lead, onClose, getBadgeColor, onUpdateEstado
               <label className="text-xs font-bold text-gray-400 uppercase tracking-wide">
                 Teléfono
               </label>
-              <p className="text-[#40269A] font-medium text-base md:text-lg mt-1">
+              <p className="text-brand font-medium text-base md:text-lg mt-1">
                 {lead.telefono || "No proporcionado"}
               </p>
             </div>
@@ -130,7 +130,7 @@ export default function LeadModal({ lead, onClose, getBadgeColor, onUpdateEstado
 
           {/* MOTIVO DE CONSULTA */}
           <div className="space-y-6">
-            <h3 className="text-base md:text-lg font-black text-[#FF0188] uppercase tracking-widest border-b-2 border-gray-50 pb-2">
+            <h3 className="text-base md:text-lg font-black text-brand uppercase tracking-widest border-b-2 border-gray-50 pb-2">
               Motivo de Consulta
             </h3>
 
@@ -154,7 +154,7 @@ export default function LeadModal({ lead, onClose, getBadgeColor, onUpdateEstado
                 <label className="text-xs font-bold text-blue-600 uppercase tracking-wide block">
                   Curso de interés
                 </label>
-                <p className="text-[#40269A] font-black text-base mt-2">{lead.curso}</p>
+                <p className="text-brand font-black text-base mt-2">{lead.curso}</p>
               </div>
             )}
 
@@ -163,7 +163,7 @@ export default function LeadModal({ lead, onClose, getBadgeColor, onUpdateEstado
                 <label className="text-xs font-bold text-teal-600 uppercase tracking-wide block">
                   Servicio de interés
                 </label>
-                <p className="text-[#40269A] font-black text-base mt-2">{lead.servicio}</p>
+                <p className="text-brand font-black text-base mt-2">{lead.servicio}</p>
               </div>
             )}
 
@@ -184,7 +184,7 @@ export default function LeadModal({ lead, onClose, getBadgeColor, onUpdateEstado
         <div className="bg-gray-50 p-4 md:p-6 lg:px-10 border-t border-gray-100 flex flex-col sm:flex-row justify-end gap-3 md:gap-4">
           <a
             href={`mailto:${lead.email}`}
-            className="sm:mr-auto flex items-center justify-center gap-2 text-white bg-[#40269A] px-6 py-3 rounded-xl font-bold hover:bg-[#2c1a6b] transition-colors shadow-md w-full sm:w-auto text-sm md:text-base"
+            className="sm:mr-auto flex items-center justify-center gap-2 text-white bg-brand px-6 py-3 rounded-xl font-bold hover:bg-[#2c1a6b] transition-colors shadow-md w-full sm:w-auto text-sm md:text-base"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -204,7 +204,7 @@ export default function LeadModal({ lead, onClose, getBadgeColor, onUpdateEstado
                 onUpdateEstado(lead.id, "Contactado");
                 onClose();
               }}
-              className="text-[#40269A] border-2 border-[#DEC7FF] bg-white px-6 py-3 rounded-xl font-bold hover:bg-[#DEC7FF]/30 transition-colors w-full sm:w-auto text-sm md:text-base"
+              className="text-brand border-2 border-brand-border bg-white px-6 py-3 rounded-xl font-bold hover:bg-brand-border/30 transition-colors w-full sm:w-auto text-sm md:text-base"
             >
               Marcar como Contactado
             </button>

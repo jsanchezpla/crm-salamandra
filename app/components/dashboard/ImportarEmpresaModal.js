@@ -85,16 +85,16 @@ export default function ImportarEmpresaModal({ onClose, empresasExistentes, onIm
   };
 
   return (
-    <div className="fixed inset-0 bg-[#40269A]/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-[2rem] w-full max-w-md p-8 relative shadow-2xl animate-fadeIn border-t-8 border-[#FF0188]">
+    <div className="fixed inset-0 bg-brand/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-[2rem] w-full max-w-md p-8 relative shadow-2xl animate-fadeIn border-t-8 border-brand">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-[#FF0188] font-black w-8 h-8 rounded-full hover:bg-[#FFDAED] transition-colors"
+          className="absolute top-4 right-4 text-gray-400 hover:text-brand font-black w-8 h-8 rounded-full hover:bg-brand-subtle transition-colors"
         >
           ✕
         </button>
 
-        <h2 className="text-2xl font-black text-[#40269A] mb-2">Importar Excel</h2>
+        <h2 className="text-2xl font-black text-brand mb-2">Importar Excel</h2>
         <p className="text-gray-500 text-sm mb-6">
           Sube un archivo <strong>.xlsx</strong> con los emails de los alumnos en la primera
           columna.
@@ -110,7 +110,7 @@ export default function ImportarEmpresaModal({ onClose, empresasExistentes, onIm
               <select
                 value={empresaSeleccionada}
                 onChange={(e) => setEmpresaSeleccionada(e.target.value)}
-                className="w-full mt-1 px-4 py-3 rounded-xl border-2 border-[#DEC7FF] text-[#40269A] font-bold outline-none cursor-pointer"
+                className="w-full mt-1 px-4 py-3 rounded-xl border-2 border-brand-border text-brand font-bold outline-none cursor-pointer"
               >
                 <option value="">-- Elige una empresa --</option>
                 {empresasExistentes.map((emp, idx) => (
@@ -121,7 +121,7 @@ export default function ImportarEmpresaModal({ onClose, empresasExistentes, onIm
               </select>
               <button
                 onClick={() => setModoNueva(true)}
-                className="text-[#FF0188] text-sm font-bold mt-2 hover:underline"
+                className="text-brand text-sm font-bold mt-2 hover:underline"
               >
                 + Crear nueva empresa
               </button>
@@ -136,7 +136,7 @@ export default function ImportarEmpresaModal({ onClose, empresasExistentes, onIm
                 value={nuevaEmpresa}
                 onChange={(e) => setNuevaEmpresa(e.target.value)}
                 placeholder="Ej: Centro Aumenta"
-                className="w-full mt-1 px-4 py-3 rounded-xl border-2 border-gray-200 text-[#40269A] font-bold outline-none focus:border-[#FF0188]"
+                className="w-full mt-1 px-4 py-3 rounded-xl border-2 border-gray-200 text-brand font-bold outline-none focus:border-brand"
               />
               <button
                 onClick={() => setModoNueva(false)}
@@ -152,7 +152,7 @@ export default function ImportarEmpresaModal({ onClose, empresasExistentes, onIm
           {/* ZONA DE SUBIDA */}
           <div className="pt-2">
             <label
-              className={`w-full flex flex-col items-center justify-center p-6 border-2 border-dashed rounded-2xl transition-all cursor-pointer ${cargando ? "bg-gray-100 border-gray-300" : "border-[#DEC7FF] bg-[#fcfaff] hover:bg-[#FFDAED]/30 hover:border-[#FF0188]"}`}
+              className={`w-full flex flex-col items-center justify-center p-6 border-2 border-dashed rounded-2xl transition-all cursor-pointer ${cargando ? "bg-gray-100 border-gray-300" : "border-brand-border bg-surface hover:bg-brand-subtle/30 hover:border-brand"}`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -163,7 +163,7 @@ export default function ImportarEmpresaModal({ onClose, empresasExistentes, onIm
                 {/* Icono de Excel */}
                 <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
               </svg>
-              <span className="font-bold text-[#40269A]">
+              <span className="font-bold text-brand">
                 {cargando ? "Leyendo Excel..." : "Seleccionar Archivo .xlsx"}
               </span>
               <span className="text-xs text-gray-400 mt-1">Columna A = Emails</span>

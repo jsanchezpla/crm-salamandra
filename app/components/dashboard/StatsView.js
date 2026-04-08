@@ -25,7 +25,6 @@ export default function StatsView({ leads, alumnos, ventas }) {
     totalAlumnos > 0 ? Math.round((alumnosActivos / totalAlumnos) * 100) : 0;
 
   const empresas = alumnos.filter((a) => a.perfil === "Empresa").length;
-  const particulares = totalAlumnos - empresas;
   const porcentajeEmpresas = totalAlumnos > 0 ? Math.round((empresas / totalAlumnos) * 100) : 0;
 
   // 3. Demanda por motivo/servicio/curso (nuevo modelo de leads)
@@ -69,7 +68,7 @@ export default function StatsView({ leads, alumnos, ventas }) {
       {/* FILA 1: KPIs (Tarjetas de métricas principales) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Tarjeta 1: Ingresos */}
-        <div className="bg-gradient-to-br from-[#40269A] to-[#6A4BC4] p-6 rounded-3xl shadow-lg text-white relative overflow-hidden">
+        <div className="bg-gradient-to-br from-brand to-brand-light p-6 rounded-3xl shadow-lg text-white relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full translate-x-1/3 -translate-y-1/3 blur-xl"></div>
           <h3 className="text-white/80 font-bold uppercase tracking-widest text-xs mb-2">
             Ingresos Totales
@@ -83,7 +82,7 @@ export default function StatsView({ leads, alumnos, ventas }) {
           <h3 className="text-gray-400 font-bold uppercase tracking-widest text-xs mb-2">
             Ticket Medio
           </h3>
-          <div className="text-4xl font-black text-[#40269A]">{ticketMedio}€</div>
+          <div className="text-4xl font-black text-brand">{ticketMedio}€</div>
           <p className="text-gray-400 font-medium text-sm mt-2">Por cada venta realizada</p>
         </div>
 
@@ -92,15 +91,15 @@ export default function StatsView({ leads, alumnos, ventas }) {
           <h3 className="text-gray-400 font-bold uppercase tracking-widest text-xs mb-2">
             Tasa de Contacto (Leads)
           </h3>
-          <div className="text-4xl font-black text-[#FF0188]">
+          <div className="text-4xl font-black text-brand">
             {porcentajeContactados}%{" "}
             <span className="text-xl text-gray-400 font-bold">contactados</span>
           </div>
           <div className="text-gray-500 font-medium text-sm mt-3 flex items-center gap-4">
-            <span className="bg-[#FFDAED]/50 text-[#FF0188] px-3 py-1 rounded-lg">
+            <span className="bg-brand-subtle/50 text-brand px-3 py-1 rounded-lg">
               <span className="font-black">{leadsNuevos}</span> Nuevos
             </span>
-            <span className="bg-[#DEC7FF]/30 text-[#40269A] px-3 py-1 rounded-lg">
+            <span className="bg-brand-border/30 text-brand px-3 py-1 rounded-lg">
               <span className="font-black">{leadsContactados}</span> Contactados
             </span>
           </div>
@@ -111,9 +110,9 @@ export default function StatsView({ leads, alumnos, ventas }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Gráfica Izquierda: Demanda de Cursos (Barras Horizontales Tailwind) */}
         <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
-          <h3 className="text-[#40269A] font-black text-xl mb-6 flex justify-between items-center">
+          <h3 className="text-brand font-black text-xl mb-6 flex justify-between items-center">
             Top Intereses (Leads)
-            <span className="text-xs bg-[#FFDAED] text-[#FF0188] px-3 py-1 rounded-full uppercase tracking-wider">
+            <span className="text-xs bg-brand-subtle text-brand px-3 py-1 rounded-full uppercase tracking-wider">
               Demanda
             </span>
           </h3>
@@ -124,13 +123,13 @@ export default function StatsView({ leads, alumnos, ventas }) {
                 <div key={idx}>
                   <div className="flex justify-between text-sm font-bold text-gray-700 mb-1">
                     <span>{curso.nombre}</span>
-                    <span className="text-[#FF0188]">{curso.cantidad} leads</span>
+                    <span className="text-brand">{curso.cantidad} leads</span>
                   </div>
                   {/* La barra de fondo gris */}
                   <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
                     {/* La barra de color cuyo ancho depende del % de demanda */}
                     <div
-                      className="bg-gradient-to-r from-[#FF0188] to-[#FFDAED] h-3 rounded-full transition-all duration-1000"
+                      className="bg-gradient-to-r from-brand to-brand-subtle h-3 rounded-full transition-all duration-1000"
                       style={{ width: `${(curso.cantidad / maxDemanda) * 100}%` }}
                     ></div>
                   </div>
@@ -146,15 +145,15 @@ export default function StatsView({ leads, alumnos, ventas }) {
         <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col justify-between space-y-8">
           {/* Ratio 1: Activos vs Inactivos */}
           <div>
-            <h3 className="text-[#40269A] font-black text-lg mb-4">Salud de la Comunidad</h3>
+            <h3 className="text-brand font-black text-lg mb-4">Salud de la Comunidad</h3>
             <div className="flex justify-between text-sm font-bold text-gray-700 mb-2">
               <span>🟢 Activos ({porcentajeActivos}%)</span>
               <span>🔴 Inactivos ({100 - porcentajeActivos}%)</span>
             </div>
             {/* Barra de progreso combinada */}
-            <div className="w-full bg-red-100 flex rounded-full h-4 overflow-hidden">
+            <div className="w-full bg-brand-subtle flex rounded-full h-4 overflow-hidden">
               <div
-                className="bg-green-400 h-4 transition-all duration-1000"
+                className="bg-brand h-4 transition-all duration-1000"
                 style={{ width: `${porcentajeActivos}%` }}
               ></div>
             </div>
@@ -164,15 +163,15 @@ export default function StatsView({ leads, alumnos, ventas }) {
 
           {/* Ratio 2: Tipo de Perfil (B2B vs B2C) */}
           <div>
-            <h3 className="text-[#40269A] font-black text-lg mb-4">Perfil de Clientes</h3>
+            <h3 className="text-brand font-black text-lg mb-4">Perfil de Clientes</h3>
             <div className="flex justify-between text-sm font-bold text-gray-700 mb-2">
               <span>B2B (Empresa) - {porcentajeEmpresas}%</span>
               <span>B2C (Particulares) - {100 - porcentajeEmpresas}%</span>
             </div>
             {/* Barra de progreso combinada usando tus colores */}
-            <div className="w-full bg-[#DEC7FF] flex rounded-full h-4 overflow-hidden">
+            <div className="w-full bg-brand-border flex rounded-full h-4 overflow-hidden">
               <div
-                className="bg-[#40269A] h-4 transition-all duration-1000"
+                className="bg-brand h-4 transition-all duration-1000"
                 style={{ width: `${porcentajeEmpresas}%` }}
               ></div>
             </div>
